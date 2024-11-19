@@ -26,13 +26,19 @@ import person.AbstractIndividualInterface;
  */
 public class RelationshipMap extends SimpleGraph<Integer, SingleRelationship> {
 
-    ArrayList<SingleRelationship> relArr;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2554179596604852689L;
+
+	ArrayList<SingleRelationship> relArr;
 
     /**
      * Two internal set that store all MovablePerson in the map as an array, separated by gender. Note this map is synchronized, so it is thread safe.
      *
      */
-    private final Set<Integer>[] personByGender = new Set[INDEX_TOTAL];
+    @SuppressWarnings("unchecked")
+	private final Set<Integer>[] personByGender = new Set[INDEX_TOTAL];
     /**
      * List index for male
      */
@@ -50,7 +56,7 @@ public class RelationshipMap extends SimpleGraph<Integer, SingleRelationship> {
      * Create a relationship map with no entry
      */
     public RelationshipMap() {
-        super(new RelationshipEdgeFactory());
+        super(SingleRelationship.class);
         for (int i = 0; i < personByGender.length; i++) {
             personByGender[i] = Collections.synchronizedSet(new HashSet<Integer>());
         }
@@ -94,7 +100,7 @@ public class RelationshipMap extends SimpleGraph<Integer, SingleRelationship> {
      }
      */
     public static <T extends AbstractIndividualInterface> Map<Integer, T> generateDataMap(T[] localData) {
-        HashMap localMap = new HashMap<>(localData.length);
+        HashMap<Integer, T> localMap = new HashMap<Integer, T>(localData.length);
         for (T mapEnt : localData) {
             localMap.put(mapEnt.getId(), mapEnt);
         }

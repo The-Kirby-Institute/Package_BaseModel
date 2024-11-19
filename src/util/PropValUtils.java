@@ -44,7 +44,7 @@ import org.xml.sax.SAXException;
  */
 public class PropValUtils {
 
-    public static String objectToPropStr(Object ent, Class cls) {
+    public static String objectToPropStr(Object ent, Class<?> cls) {
         String res = "";
         if (ent != null) {
             if (boolean[].class.equals(ent)) {
@@ -64,8 +64,10 @@ public class PropValUtils {
         return res;
     }
 
-    public static Object propStrToObject(String ent, Class cls) {
+    public static Object propStrToObject(String ent, Class<?> cls) {
         Object res = null;
+        ent  = ent.replaceAll("\\s", "");
+        
         if (ent != null && !ent.isEmpty()) {
             if ("null".equalsIgnoreCase(ent)) {
                 res = null;
@@ -90,7 +92,7 @@ public class PropValUtils {
         return res;
     }
 
-    private static Object parsePrimitiveArray(String arrayStr, Class c) {
+    private static Object parsePrimitiveArray(String arrayStr, Class<?> c) {
         Object res = null;
         try {
             if (arrayStr != null && !arrayStr.isEmpty() && !"null".equalsIgnoreCase(arrayStr)) {
